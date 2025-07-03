@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
           <div className="space-x-6">
             <a href="#features" className="hover:text-blue-600">Features</a>
             <a href="#testimonials" className="hover:text-blue-600">Testimonials</a>
-            <a href="/submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Request</a>
+            <Link href="/submit" passHref legacyBehavior>
+              <a className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Request</a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -25,15 +28,13 @@ export default function Home() {
             <p className="text-lg text-gray-700">
               Blue‑R delivers custom software solutions and ongoing website care so you can focus on growing your business.
             </p>
-            <a
-              href="/submit"
-              className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition"
-            >
-              Get Started
-            </a>
+            <Link href="/submit" passHref legacyBehavior>
+              <a className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+                Get Started
+              </a>
+            </Link>
           </div>
           <div className="md:w-1/2 mt-8 md:mt-0">
-            {/* Placeholder for illustration */}
             <div className="relative w-full h-64 md:h-80 lg:h-96">
               <Image
                 src="/Blue-R.png"
@@ -82,11 +83,11 @@ export default function Home() {
         </div>
         <div className="max-w-4xl mx-auto px-6 space-y-8">
           {[
-            ['“Blue‑R built our new site in weeks and handles all updates flawlessly.”', '— Jane Doe, CEO of Acme Corp'],
-            ['“Their team optimized our performance by 50% and secured our data.”', '— John Smith, CTO of TechCo'],
+            ['&ldquo;Blue‑R built our new site in weeks and handles all updates flawlessly.&rdquo;', '— Jane Doe, CEO of Acme Corp'],
+            ['&ldquo;Their team optimized our performance by 50% and secured our data.&rdquo;', '— John Smith, CTO of TechCo'],
           ].map(([quote, author], i) => (
             <blockquote key={i} className="bg-white p-6 rounded-lg shadow">
-              <p className="text-gray-700 italic mb-4">"{quote}"</p>
+              <p className="text-gray-700 italic mb-4" dangerouslySetInnerHTML={{ __html: quote }} />
               <footer className="text-gray-500">{author}</footer>
             </blockquote>
           ))}
