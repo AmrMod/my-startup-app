@@ -1,12 +1,67 @@
+// pages/index.js (or .tsx for TypeScript)
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { supabase } from '../lib/supabaseClient'; // Import your Supabase client
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // State for the Quick Quote Form
+  const [quickQuoteForm, setQuickQuoteForm] = useState({
+    title: "",
+    email: "",
+    description: "",
+  });
+  const [loadingQuickQuote, setLoadingQuickQuote] = useState(false);
+  const [quickQuoteMessage, setQuickQuoteMessage] = useState("");
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Handler for Quick Quote Form changes
+  const handleQuickQuoteChange = (e) => {
+    setQuickQuoteForm({ ...quickQuoteForm, [e.target.name]: e.target.value });
+  };
+
+  // Handler for Quick Quote Form submission
+  const handleQuickQuoteSubmit = async (e) => {
+    e.preventDefault();
+    setLoadingQuickQuote(true);
+    setQuickQuoteMessage("");
+
+    // Destructure form data for insertion.
+    // Note: The /submit page also has 'type' and 'budget'.
+    // If these are not relevant for the quick quote, ensure your Supabase 'projects' table
+    // allows 'type' and 'budget' to be NULLable, or provide default values here.
+    // For this example, I'm just sending the fields available in the quick quote form.
+    const { title, email, description } = quickQuoteForm;
+
+    const { error } = await supabase.from("projects").insert([
+      {
+        title: title,
+        email: email,
+        description: description,
+        // You might want to add default values for 'type' and 'budget'
+        // or ensure your Supabase schema allows them to be null.
+        // For instance: type: "Quick Inquiry", budget: "N/A"
+      },
+    ]);
+
+    if (error) {
+      console.error("Error submitting quick quote:", error); // Log the error for debugging
+      setQuickQuoteMessage("❌ Error submitting your request. Please try again.");
+    } else {
+      setQuickQuoteMessage("✅ Your request has been sent! We'll get back to you soon.");
+      // Clear the form on successful submission
+      setQuickQuoteForm({
+        title: "",
+        email: "",
+        description: "",
+      });
+    }
+    setLoadingQuickQuote(false);
   };
 
   return (
@@ -15,7 +70,6 @@ export default function Home() {
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-10 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <span className="text-2xl font-bold text-blue-600">Blue‑R</span>
-
           {/* Hamburger menu for small screens */}
           <div className="md:hidden">
             <button
@@ -40,7 +94,6 @@ export default function Home() {
               </svg>
             </button>
           </div>
-
           {/* Navigation links - hidden on small screens, shown on medium and larger */}
           <div className="hidden md:flex space-x-6">
             <a href="#features" className="hover:text-blue-600">
@@ -56,7 +109,6 @@ export default function Home() {
             </Link>
           </div>
         </div>
-
         {/* Mobile menu - conditionally rendered based on isMenuOpen state */}
         {isMenuOpen && (
           <div className="md:hidden bg-white/90 backdrop-blur-sm py-2 px-6 shadow-sm">
@@ -162,21 +214,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Quick Quote Form */}
+      {/* Quick Quote Form (Modified) */}
       <section className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-6 text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Need a quick chat?</h2>
           <p className="text-gray-600">Tell us the basics and we’ll get back to you ASAP.</p>
         </div>
         <form
-          action="/submit"
-          method="get"
+          onSubmit={handleQuickQuoteSubmit} // Use the new submit handler
           className="max-w-3xl mx-auto px-6 grid gap-4 sm:grid-cols-2"
         >
           <input
             type="text"
             name="title"
             placeholder="Project Title"
+            value={quickQuoteForm.title} // Bind value to state
+            onChange={handleQuickQuoteChange} // Bind change handler
             required
             className="p-3 border rounded-lg"
           />
@@ -184,20 +237,30 @@ export default function Home() {
             type="email"
             name="email"
             placeholder="Your Email"
+            value={quickQuoteForm.email} // Bind value to state
+            onChange={handleQuickQuoteChange} // Bind change handler
             required
             className="p-3 border rounded-lg"
           />
           <textarea
             name="description"
             placeholder="Brief Description"
+            value={quickQuoteForm.description} // Bind value to state
+            onChange={handleQuickQuoteChange} // Bind change handler
             className="p-3 border rounded-lg sm:col-span-2 h-24"
           />
           <button
             type="submit"
+            disabled={loadingQuickQuote} // Disable button during submission
             className="sm:col-span-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition"
           >
-            Send Request
+            {loadingQuickQuote ? "Sending..." : "Send Request"}
           </button>
+          {quickQuoteMessage && ( // Display submission message
+            <p className="sm:col-span-2 text-center text-sm mt-2">
+              {quickQuoteMessage}
+            </p>
+          )}
         </form>
       </section>
 
@@ -211,4 +274,3 @@ export default function Home() {
     </div>
   );
 }
-
