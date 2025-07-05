@@ -1,21 +1,91 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Nav */}
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-10 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <span className="text-2xl font-bold text-blue-600">Blue‑R</span>
-          <div className="space-x-6">
-            <a href="#features" className="hover:text-blue-600">Features</a>
-            <a href="#testimonials" className="hover:text-blue-600">Testimonials</a>
+
+          {/* Hamburger menu for small screens */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-800 focus:outline-none focus:text-blue-600"
+              aria-label="Toggle navigation menu"
+            >
+              {/* You can replace this with an actual SVG icon for three dots */}
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          {/* Navigation links - hidden on small screens, shown on medium and larger */}
+          <div className="hidden md:flex space-x-6">
+            <a href="#features" className="hover:text-blue-600">
+              Features
+            </a>
+            <a href="#testimonials" className="hover:text-blue-600">
+              Testimonials
+            </a>
             <Link href="/submit" passHref legacyBehavior>
-              <a className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Request</a>
+              <a className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Submit Request
+              </a>
             </Link>
           </div>
         </div>
+
+        {/* Mobile menu - conditionally rendered based on isMenuOpen state */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white/90 backdrop-blur-sm py-2 px-6 shadow-sm">
+            <div className="flex flex-col space-y-2">
+              <a
+                href="#features"
+                className="block hover:text-blue-600 py-2"
+                onClick={toggleMenu} // Close menu on click
+              >
+                Features
+              </a>
+              <a
+                href="#testimonials"
+                className="block hover:text-blue-600 py-2"
+                onClick={toggleMenu} // Close menu on click
+              >
+                Testimonials
+              </a>
+              <Link href="/submit" passHref legacyBehavior>
+                <a
+                  className="block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center"
+                  onClick={toggleMenu} // Close menu on click
+                >
+                  Submit Request
+                </a>
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero */}
@@ -26,7 +96,8 @@ export default function Home() {
               Contracted Web Development & Maintenance
             </h1>
             <p className="text-lg text-gray-700">
-              Blue‑R delivers custom software solutions and ongoing website care so you can focus on growing your business.
+              Blue‑R delivers custom software solutions and ongoing website care so you can focus
+              on growing your business.
             </p>
             <Link href="/submit" passHref legacyBehavior>
               <a className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
@@ -64,10 +135,7 @@ export default function Home() {
             ['📈', 'Analytics', 'Data-driven insights'],
             ['🤝', 'Support', '24/7 SLA-backed help'],
           ].map(([icon, title, desc]) => (
-            <div
-              key={title}
-              className="p-6 border rounded-lg hover:shadow-lg transition"
-            >
+            <div key={title} className="p-6 border rounded-lg hover:shadow-lg transition">
               <div className="text-4xl mb-4">{icon}</div>
               <h3 className="text-xl font-semibold mb-2">{title}</h3>
               <p className="text-gray-600">{desc}</p>
@@ -141,5 +209,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  )
+  );
 }
+
