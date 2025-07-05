@@ -21,12 +21,15 @@ export default function Home() {
   };
 
   // Handler for Quick Quote Form changes
-  const handleQuickQuoteChange = (e) => {
+  const handleQuickQuoteChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setQuickQuoteForm({ ...quickQuoteForm, [e.target.name]: e.target.value });
   };
+  
 
   // Handler for Quick Quote Form submission
-  const handleQuickQuoteSubmit = async (e) => {
+  const handleQuickQuoteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoadingQuickQuote(true);
     setQuickQuoteMessage("");
