@@ -148,7 +148,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 space-y-6">
             <h1 className="text-5xl font-extrabold text-blue-700">
-              Contracted Web Development & Maintenance
+              Professional Web Development & Maintenance
             </h1>
             <p className="text-lg text-gray-700">
               Blue‑R delivers custom software solutions and ongoing website care so you can focus
@@ -161,12 +161,13 @@ export default function Home() {
             </Link>
           </div>
           <div className="md:w-1/2 mt-8 md:mt-0">
-            <div className="relative w-full h-64 md:h-80 lg:h-96">
+            <div className="w-full">
               <Image
                 src="/Blue-R.png"
                 alt="Web development illustration"
-                layout="fill"
-                objectFit="contain"
+                width={500}
+                height={400}
+                className="mx-auto object-contain"
               />
             </div>
           </div>
