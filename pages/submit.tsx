@@ -1,6 +1,7 @@
 // pages/submit.tsx
 import React, { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import Layout from "../components/Layout";
 
 const Submit: React.FC = () => {
   const [form, setForm] = useState({
@@ -42,11 +43,11 @@ const Submit: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center justify-center">
-      <h1 className="text-2xl font-bold mb-4">Submit a Software Project</h1>
+    <Layout>
+      <h1 className="text-2xl font-bold mb-4 text-center">Submit a Software Project</h1>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white p-6 rounded-lg shadow space-y-4"
+        className="w-full max-w-md mx-auto bg-white p-6 rounded-lg shadow space-y-4"
       >
         <input
           name="title"
@@ -97,7 +98,7 @@ const Submit: React.FC = () => {
         </button>
         {message && <p className="text-center text-sm mt-2">{message}</p>}
       </form>
-    </div>
+    </Layout>
   );
 };
 
