@@ -5,9 +5,7 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import Layout from "../components/Layout";
 
-
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [quickQuoteForm, setQuickQuoteForm] = useState({
     title: "",
     email: "",
@@ -15,8 +13,6 @@ export default function Home() {
   });
   const [loadingQuickQuote, setLoadingQuickQuote] = useState(false);
   const [quickQuoteMessage, setQuickQuoteMessage] = useState("");
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleQuickQuoteChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
