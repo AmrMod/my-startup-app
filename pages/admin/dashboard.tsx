@@ -17,7 +17,6 @@ export default function Admin() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
-  // Fetch projects on mount
   useEffect(() => {
     async function loadProjects() {
       const { data, error } = await supabase
@@ -31,7 +30,6 @@ export default function Admin() {
     loadProjects();
   }, []);
 
-  // Logout handler
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push('/admin/login');
@@ -76,24 +74,24 @@ export default function Admin() {
       <main className="flex-1 pt-24 pb-6 px-6 bg-gray-50">
         <h2 className="text-3xl font-bold mb-4">Project Submissions</h2>
         <div className="overflow-x-auto">
-          <table className="table-fixed w-full bg-white rounded-lg shadow">
+          <table className="min-w-full bg-white rounded-lg shadow text-sm">
             <thead>
               <tr className="bg-blue-600 text-white">
-                <th className="w-1/12 py-2 px-4 text-left">ID</th>
-                <th className="w-3/12 py-2 px-4 text-left">Title</th>
-                <th className="w-2/12 py-2 px-4 text-left">Type</th>
-                <th className="w-3/12 py-2 px-4 text-left">Email</th>
-                <th className="w-3/12 py-2 px-4 text-left">Submitted At</th>
+                <th className="min-w-[40px] py-2 px-4 text-left">ID</th>
+                <th className="min-w-[160px] py-2 px-4 text-left">Title</th>
+                <th className="min-w-[120px] py-2 px-4 text-left">Type</th>
+                <th className="min-w-[200px] py-2 px-4 text-left">Email</th>
+                <th className="min-w-[180px] py-2 px-4 text-left">Submitted At</th>
               </tr>
             </thead>
             <tbody>
               {projects.map((proj) => (
                 <tr key={proj.id} className="border-b hover:bg-gray-100">
                   <td className="py-2 px-4">{proj.id}</td>
-                  <td className="py-2 px-4">{proj.title}</td>
-                  <td className="py-2 px-4">{proj.type}</td>
-                  <td className="py-2 px-4">{proj.email}</td>
-                  <td className="py-2 px-4">{new Date(proj.inserted_at).toLocaleString()}</td>
+                  <td className="py-2 px-4 break-words">{proj.title}</td>
+                  <td className="py-2 px-4 break-words">{proj.type}</td>
+                  <td className="py-2 px-4 break-words">{proj.email}</td>
+                  <td className="py-2 px-4 whitespace-nowrap">{new Date(proj.inserted_at).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
