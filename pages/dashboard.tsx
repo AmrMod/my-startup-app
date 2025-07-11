@@ -37,12 +37,16 @@ export default function Dashboard() {
   }
 
   return (
-    <Layout>
-      <div className="max-w-3xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
-        <h1 className="text-2xl font-semibold mb-4">Welcome, {user?.user_metadata?.name || "Client"}!</h1>
-        <p className="text-gray-700 mb-2">Email: {user?.email}</p>
-        <p className="text-gray-700">Account created: {new Date(user?.created_at!).toLocaleDateString()}</p>
-      </div>
-    </Layout>
-  );
+  <Layout>
+    <div className="max-w-3xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-semibold mb-4">
+        Welcome, {user?.user_metadata?.name ?? "Client"}!
+      </h1>
+      <p className="text-gray-700 mb-2">Email: {user?.email}</p>
+      <p className="text-gray-700">
+        Account created: {user?.created_at ? new Date(user.created_at).toLocaleDateString() : "N/A"}
+      </p>
+    </div>
+  </Layout>
+);
 }
