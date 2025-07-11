@@ -1,12 +1,12 @@
-// pages/dashboard.tsx
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../lib/supabaseClient";
 import Layout from "../components/Layout";
+import { User } from "@supabase/supabase-js"; // ✅ Import User type
 
 export default function Dashboard() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null); // ✅ Use proper type
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,9 +39,9 @@ export default function Dashboard() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
-        <h1 className="text-2xl font-semibold mb-4">Welcome, {user.user_metadata?.name || "Client"}!</h1>
-        <p className="text-gray-700 mb-2">Email: {user.email}</p>
-        <p className="text-gray-700">Account created: {new Date(user.created_at).toLocaleDateString()}</p>
+        <h1 className="text-2xl font-semibold mb-4">Welcome, {user?.user_metadata?.name || "Client"}!</h1>
+        <p className="text-gray-700 mb-2">Email: {user?.email}</p>
+        <p className="text-gray-700">Account created: {new Date(user?.created_at!).toLocaleDateString()}</p>
       </div>
     </Layout>
   );
