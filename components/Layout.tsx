@@ -46,12 +46,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <main className="pt-24 px-4 flex-grow">{children}</main>
 
       {/* Footer */}
-      <footer className="mt-auto py-6 bg-gray-100 text-center text-sm text-gray-600">
-        © {new Date().getFullYear()} Blue‑R. Built by Amir Modibbo.{' '}
-        <a href="https://github.com/AmrMod/my-startup-app" className="underline">
-          GitHub
-        </a>
-      </footer>
+      <footer className="mt-auto py-6 bg-gray-100 text-center text-sm text-gray-600 space-y-1">
+  <p>
+    © {new Date().getFullYear()} Blue‑R. Built by Amir Modibbo.{' '}
+    <a href="https://github.com/AmrMod/my-startup-app" className="underline">
+      GitHub
+    </a>
+  </p>
+  <p>
+    📞 <a href="tel:+2347063022632" className="underline text-blue-600">+234 706 3022 632</a>
+  </p>
+</footer>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import Layout from "../components/Layout";
 
-const Submit: React.FC = () => {
+export default function Submit() {
   const [form, setForm] = useState({
     title: "",
     type: "",
@@ -100,6 +100,4 @@ const Submit: React.FC = () => {
       </form>
     </Layout>
   );
-};
-
-export default Submit;
+}

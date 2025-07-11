@@ -48,33 +48,42 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-white">
-        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 space-y-6">
-            <h1 className="text-5xl font-extrabold text-blue-700">
-              Professional Web Development & Maintenance
-            </h1>
-            <p className="text-lg text-gray-700">
-              Blue‑R delivers custom software solutions and ongoing website care so you can focus
-              on growing your business.
-            </p>
-            <Link href="/submit" className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
-              Get Started
-            </Link>
-          </div>
-          <div className="md:w-1/2 mt-8 md:mt-0">
-            <div className="w-full">
-              <Image
-                src="/Blue-R.png"
-                alt="Web development illustration"
-                width={500}
-                height={400}
-                className="mx-auto object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero */}
+<section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-white">
+  <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center">
+    <div className="md:w-1/2 space-y-6">
+      <h1 className="text-5xl font-extrabold text-blue-700">
+        Professional Web Development & Maintenance
+      </h1>
+      <p className="text-lg text-gray-700">
+        Blue‑R delivers custom software solutions and ongoing website care so you can focus
+        on growing your business.
+      </p>
+
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Link href="/register" className="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition">
+          Register
+        </Link>
+        <Link href="/login" className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+          Login
+        </Link>
+      </div>
+    </div>
+
+    <div className="md:w-1/2 mt-8 md:mt-0">
+      <div className="w-full">
+        <Image
+          src="/Blue-R.png"
+          alt="Web development illustration"
+          width={500}
+          height={400}
+          className="mx-auto object-contain"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Features */}
       <section id="features" className="py-16 bg-white">
