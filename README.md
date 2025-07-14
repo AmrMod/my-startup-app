@@ -2,7 +2,7 @@
 
 Live Site:(https://my-startup-app-01.vercel.app)
 
-Blue‑R is a modern web app built with Next.js to handle software project requests. It offers full-stack web development and website maintenance services, allowing users to request quick quotes via a Supabase-powered backend.
+Blue‑R is a modern web app built with Next.js to handle software project requests. It offers full-stack web development and website maintenance services, allowing users to send request dev and maintenance request quickly via a Supabase-powered backend.
 
 ---
 
@@ -34,7 +34,7 @@ npm run dev
 ---
 
 📦 Deployment
-This app is deployed on Vercel. You can deploy your own version in seconds by clicking below:
+This app is deployed on Vercel.
 
 ---
 
