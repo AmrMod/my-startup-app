@@ -24,7 +24,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <nav className="hidden md:flex space-x-6">
             <Link href="#features" className="hover:text-blue-600">Features</Link>
             <Link href="#testimonials" className="hover:text-blue-600">Testimonials</Link>
-            <Link href="/submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            <Link href="/submit" className="hover:text-blue-600">
               Submit Request
             </Link>
           </nav>
