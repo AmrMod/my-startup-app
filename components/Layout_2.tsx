@@ -23,7 +23,7 @@ const Layout_2 = ({ children }: { children: React.ReactNode }) => {
 
           <nav className="hidden md:flex space-x-6">
             <Link href="/login" className="hover:text-blue-600">Login</Link>
-            <Link href="/submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            <Link href="/submit" className="hover:text-blue-600">
               Submit Request
             </Link>
           </nav>
@@ -33,7 +33,7 @@ const Layout_2 = ({ children }: { children: React.ReactNode }) => {
         {menuOpen && (
           <div className="md:hidden px-6 py-2 bg-white shadow">
             <Link href="/login" className="block py-2" onClick={() => setMenuOpen(false)}>Login</Link>
-            <Link href="/submit" className="block bg-blue-600 text-white px-4 py-2 rounded text-center mt-2" onClick={() => setMenuOpen(false)}>
+            <Link href="/submit" className="block py-2" onClick={() => setMenuOpen(false)}>
               Submit Request
             </Link>
           </div>
