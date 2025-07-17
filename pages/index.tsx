@@ -48,12 +48,11 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero */}
-      {/* Hero */}
 <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-white">
   <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center">
     <div className="md:w-1/2 space-y-6">
       <h1 className="text-5xl font-extrabold text-blue-700">
-        Professional Web Development & Maintenance
+        Professional Web Development & Maintenance Services
       </h1>
       <p className="text-lg text-gray-700">
         Blue‑R delivers custom software solutions and ongoing website care so you can focus
@@ -75,7 +74,7 @@ export default function Home() {
         <Image
           src="/Blue-R.png"
           alt="Web development illustration"
-          width={500}
+          width={400}
           height={400}
           className="mx-auto object-contain"
         />
@@ -96,7 +95,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
             ['💡', 'Custom Builds', 'Tailored web apps & sites'],
-            ['🔧', 'Maintenance', 'Regular updates, bug fixes'],
+            ['🔧', 'Maintenance', 'Updates, bug fixes'],
             ['⚡', 'Performance', 'Speed optimization & SEO'],
             ['🔒', 'Security', 'Vulnerability assessments'],
             ['📈', 'Analytics', 'Data-driven insights'],
@@ -119,7 +118,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 space-y-8">
           {[
             ['\u201cBlue‑R built our new site in weeks and handles all updates flawlessly.\u201d', '— Jane Doe, CEO of Acme Corp'],
-            ['\u201cTheir team optimized our performance by 50% and secured our data.\u201d', '— John Smith, CTO of TechCo'],
+            ['\u201cTheir team brought back our website back to life when it crashed.\u201d', '— John Smith, CTO of TechCo'],
           ].map(([quote, author], i) => (
             <blockquote key={i} className="bg-white p-6 rounded-lg shadow">
               <p className="text-gray-700 italic mb-4">{quote}</p>

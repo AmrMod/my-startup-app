@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../lib/supabaseClient";
-import Layout from "../components/Layout";
+import Layout_2 from "../components/Layout_2";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -51,7 +51,7 @@ export default function Register() {
   };
 
   return (
-    <Layout>
+    <Layout_2>
       <div className="max-w-md mx-auto mt-24 bg-white shadow-md p-6 rounded-lg">
         <h2 className="text-2xl font-semibold text-center mb-4">Client Registration</h2>
         <form onSubmit={handleRegister} className="space-y-4">
@@ -89,6 +89,6 @@ export default function Register() {
           {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
         </form>
       </div>
-    </Layout>
+    </Layout_2>
   );
 }
