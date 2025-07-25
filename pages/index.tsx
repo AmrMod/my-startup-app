@@ -95,7 +95,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[
             ['💡', 'Custom Builds', 'Tailored web apps & sites'],
-            ['🔧', 'Maintenance', 'Updates, bug fixes'],
+            ['🔧', 'Maintenance', 'Updates & bug fixes'],
             ['⚡', 'Performance', 'Speed optimization & SEO'],
             ['🔒', 'Security', 'Vulnerability assessments'],
             ['📈', 'Analytics', 'Data-driven insights'],

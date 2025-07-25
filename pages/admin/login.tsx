@@ -34,7 +34,7 @@ export default function AdminLogin() {
       setLoading(false);
       return;
     }
-
+    
     localStorage.setItem('admin_session', JSON.stringify({ email }));
     router.push('/admin/dashboard');
   };
