@@ -9,6 +9,7 @@ type Project = {
   title: string;
   email: string;
   inserted_at: string;
+  status?: string; 
 };
 
 export default function Dashboard() {
@@ -61,11 +62,9 @@ export default function Dashboard() {
       setProjectsLoading(true);
       const { data, error } = await supabase
         .from("projects")
-        .select("id, title, email, inserted_at")
+        .select("id, title, email, inserted_at, status") 
         .eq("email", user.email)
         .order("inserted_at", { ascending: false });
-
-      console.log("Projects fetch:", { data, error, userId: user.id });
 
       if (!error && data) {
         setProjects(data as Project[]);
@@ -110,8 +109,13 @@ export default function Dashboard() {
                     Submitted: {new Date(project.inserted_at).toLocaleDateString()}
                   </div>
                 </div>
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
-                  Pending
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold
+                  ${project.status === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                    project.status === "In Progress" ? "bg-blue-100 text-blue-800" :
+                    project.status === "Done" ? "bg-green-100 text-green-800" :
+                    "bg-gray-100 text-gray-800"
+                  }`}>
+                  {project.status ?? "Pending"}
                 </span>
               </li>
             ))}

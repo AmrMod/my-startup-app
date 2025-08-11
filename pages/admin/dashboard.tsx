@@ -10,6 +10,7 @@ type Project = {
   type: string;
   email: string;
   inserted_at: string;
+  status?: string; 
 };
 
 export default function Admin() {
@@ -29,6 +30,21 @@ export default function Admin() {
 
     loadProjects();
   }, []);
+
+  const handleStatusChange = async (id: number, newStatus: string) => {
+    const { error } = await supabase
+      .from('projects')
+      .update({ status: newStatus })
+      .eq('id', id);
+
+    if (!error) {
+      setProjects((prev) =>
+        prev.map((proj) =>
+          proj.id === id ? { ...proj, status: newStatus } : proj
+        )
+      );
+    }
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -82,6 +98,7 @@ export default function Admin() {
                 <th className="min-w-[120px] py-2 px-4 text-left">Type</th>
                 <th className="min-w-[200px] py-2 px-4 text-left">Email</th>
                 <th className="min-w-[180px] py-2 px-4 text-left">Submitted At</th>
+                <th className="min-w-[120px] py-2 px-4 text-left">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -92,6 +109,18 @@ export default function Admin() {
                   <td className="py-2 px-4 break-words">{proj.type}</td>
                   <td className="py-2 px-4 break-words">{proj.email}</td>
                   <td className="py-2 px-4 whitespace-nowrap">{new Date(proj.inserted_at).toLocaleString()}</td>
+                  <td className="py-2 px-4">
+                    <select
+                      value={proj.status}
+                      onChange={(e) => handleStatusChange(proj.id, e.target.value)}
+                      className="bg-gray-50 border border-gray-300 rounded-md p-1 text-sm"
+                    >
+                      <option value="">Select status</option>
+                      <option value="reviewing">Reviewing</option>
+                      <option value="approved">Approved</option>
+                      <option value="rejected">Rejected</option>
+                    </select>
+                  </td>
                 </tr>
               ))}
             </tbody>
