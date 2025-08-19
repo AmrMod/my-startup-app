@@ -1,4 +1,4 @@
-// pages/api/admin/add-developer.ts
+// pages/api/admin/add-developer.tsx
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createClient } from '@supabase/supabase-js';
 
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // 1. Use the admin client to create the user in auth.users table
-    const { data: { user }, error: authError } = await supabase.auth.admin.createUser({
+    const { data, error: authError } = await supabase.auth.admin.createUser({
       email: email,
       password: password,
       email_confirm: true,
@@ -32,20 +32,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: authError.message });
     }
 
-    // 2. Insert the user's profile with the 'developer' role
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .insert([
-        { id: user?.id, email: user?.email, name: name, role: 'developer' },
-      ]);
+    // Safely check if the user object exists before proceeding
+    const user = data.user;
+    if (user) {
+      // 2. Insert the user's profile with the 'developer' role
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert([
+          { id: user.id, email: user.email, name: name, role: 'developer' },
+        ]);
 
-    if (profileError) {
-      // Clean up the created auth user if the profile insertion fails
-      await supabase.auth.admin.deleteUser(user?.id!);
-      return res.status(500).json({ error: 'Failed to create user profile' });
+      if (profileError) {
+        // Clean up the created auth user if the profile insertion fails
+        await supabase.auth.admin.deleteUser(user.id);
+        return res.status(500).json({ error: 'Failed to create user profile' });
+      }
+
+      res.status(200).json({ message: 'Developer added successfully!' });
+    } else {
+        // Handle the case where the user object is unexpectedly null
+        return res.status(500).json({ error: 'User creation failed.' });
     }
 
-    res.status(200).json({ message: 'Developer added successfully!' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
