@@ -50,7 +50,7 @@ export default function DeveloperDashboard() {
       const { data, error } = await supabase
         .from("projects")
         .select("id, title, status, inserted_at")
-        .eq("developer_email", user.email) // Crucial filter for the developer
+        .eq("email", user.email) // Crucial filter for the developer
         .order("inserted_at", { ascending: false });
 
       if (!error && data) {

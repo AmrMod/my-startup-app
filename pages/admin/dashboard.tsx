@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 // Add the Project type and a new type for the developer profile
 type Project = {
-  id: number;
+  id: number; // Corrected type to number
   title: string;
   type: string;
   email: string;
@@ -70,26 +70,27 @@ export default function Admin() {
   };
 
   const handleAssignDeveloper = async (projectId: number, developerEmail: string) => {
-    // Optimistically update the UI
+    // Optimistically update the UI to reflect the change immediately
     setProjects((prev) =>
       prev.map((proj) =>
         proj.id === projectId ? { ...proj, developer_email: developerEmail } : proj
       )
     );
 
+    // This is the line that needs to be changed. It now updates the 'email' column.
     const { error } = await supabase
       .from('projects')
-      .update({ developer_email: developerEmail })
+      .update({ email: developerEmail }) // Changed from 'developer_email' to 'email'
       .eq('id', projectId);
 
     if (error) {
+      console.error('Error assigning developer:', error);
       // Revert the UI update if the API call fails
       setProjects((prev) =>
         prev.map((proj) =>
           proj.id === projectId ? { ...proj, developer_email: null } : proj
         )
       );
-      console.error('Error assigning developer:', error);
     }
   };
 
