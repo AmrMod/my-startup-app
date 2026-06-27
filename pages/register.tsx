@@ -17,36 +17,44 @@ export default function Register() {
     setLoading(true);
     setErrorMsg("");
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
 
-    if (error) {
-      setErrorMsg(error.message);
-      setLoading(false);
-      return;
-    }
-
-    const userId = data.user?.id;
-
-    if (userId) {
-      const { error: profileError } = await supabase.from("profiles").insert([
-        {
-          id: userId,
-          name,
-          email,
-        },
-      ]);
-
-      if (profileError) {
-        setErrorMsg(profileError.message);
+      if (error) {
+        setErrorMsg(error.message);
         setLoading(false);
         return;
       }
+
+      const userId = data.user?.id;
+
+      if (userId) {
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: userId,
+            name,
+            email,
+          },
+        ]);
+
+        if (profileError) {
+          setErrorMsg(profileError.message);
+          setLoading(false);
+          return;
+        }
+      }
+
+      router.push("/login"); // Redirect to login
+    } catch (err) {
+      console.error("Registration network error:", err);
+      setErrorMsg(
+        "Unable to connect to the authentication server. Please check your internet connection and try again."
+      );
     }
 
-    router.push("/login"); // Redirect to login
     setLoading(false);
   };
 

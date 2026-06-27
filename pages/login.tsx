@@ -17,42 +17,49 @@ export default function Login() {
     setLoading(true);
     setErrorMsg("");
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
-      setErrorMsg(error.message);
-      setLoading(false);
-      return;
-    }
-
-    // Now that the user is logged in, fetch their role
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (user) {
-      const { data: profile, error: profileError } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single();
-
-      if (profileError) {
-        // Log the error but default to client dashboard
-        console.error("Error fetching user profile:", profileError);
-        router.push("/dashboard");
-      } else {
-        if (profile.role === "admin") {
-          router.push("/admin/dashboard");
-        } else if (profile.role === "developer") {
-          router.push("/developer-dashboard");
-        } else {
-          router.push("/dashboard");
-        }
+      if (error) {
+        setErrorMsg(error.message);
+        setLoading(false);
+        return;
       }
-    } else {
-        router.push("/dashboard");
+
+      // Now that the user is logged in, fetch their role
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profileError) {
+          // Log the error but default to client dashboard
+          console.error("Error fetching user profile:", profileError);
+          router.push("/dashboard");
+        } else {
+          if (profile.role === "admin") {
+            router.push("/admin/dashboard");
+          } else if (profile.role === "developer") {
+            router.push("/developer-dashboard");
+          } else {
+            router.push("/dashboard");
+          }
+        }
+      } else {
+          router.push("/dashboard");
+      }
+    } catch (err) {
+      console.error("Login network error:", err);
+      setErrorMsg(
+        "Unable to connect to the authentication server. Please check your internet connection and try again."
+      );
     }
 
     setLoading(false);
